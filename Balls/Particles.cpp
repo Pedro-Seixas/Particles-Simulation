@@ -1,6 +1,6 @@
 #include "Particles.h"
 
-Particles::Particles(sf::Color color, float radius, sf::Vector2f position) : m_gravity(2), m_velocity(0.f, 0.f)
+Particles::Particles(sf::Color color, float radius, sf::Vector2f position) : m_gravity(0), m_velocity(0.f, 0.f)
 {
     m_particle.setFillColor(color);
 
@@ -44,6 +44,7 @@ void Particles::updatePosition()
     m_particle.setPosition(m_position);
 }
 
+//TODO APPLY FORCES
 void Particles::applyGravity()
 {
     m_position = sf::Vector2f(m_position.x + m_velocity.x, m_position.y + m_velocity.y);
@@ -63,12 +64,13 @@ void Particles::orbitMouse(sf::Vector2i mousePosition)
 
     float intensity = 10 / pow(distance, 2);
 
+    if (distance < distanceLimit)
+    {
+        intensity = 0;
+    }
+
     sf::Vector2f acceleration = sf::Vector2f(-distance_x * intensity, -distance_y * intensity);
 
     m_velocity = sf::Vector2f(m_velocity.x + acceleration.x, m_velocity.y + acceleration.y);
 
-    if (distance < distanceLimit)
-    {
-        m_velocity = sf::Vector2f(0, 0);
-    }
 }
