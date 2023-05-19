@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Particles.h"
 #include "Sphere.h"
+#include "Menu.h"
 
 int main()
 {
@@ -10,12 +11,12 @@ int main()
     std::vector<Particles> particles;
     sf::Vector2f position = sf::Vector2f(300.f, 300.f);
 
-    //Sphere sphere(sf::Vector2f(500.f, 300.f), 50.f, 5000.f);
+    Menu menu;
 
 
     for (int i = 0; i < numberOfParticles; ++i) {
         position = sf::Vector2f(position.x + 0.2, position.y);
-        Particles particle(color, 0.5, position);
+        Particles particle(color, 1, position);
         particles.push_back(particle);
     }
 
@@ -30,6 +31,7 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
         if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
         {
             for (int i = 0; i < numberOfParticles; i++)
@@ -43,7 +45,7 @@ int main()
         {
             particles[i].draw(window);
         }
-        sphere.draw(window);
+        menu.draw(window);
         window.display();
     }
 

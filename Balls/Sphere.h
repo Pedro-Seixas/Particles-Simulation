@@ -11,6 +11,8 @@ public:
 	float getRadius() const { return m_radius; }
 
 	void draw(sf::RenderWindow& window);
+	void updatePosition(sf::RenderWindow& window);
+
 private:
 	sf::CircleShape m_sphere;
 	sf::Vector2f m_position;
