@@ -74,3 +74,26 @@ void Particles::orbitMouse(sf::Vector2i mousePosition)
     m_velocity = sf::Vector2f(m_velocity.x + acceleration.x, m_velocity.y + acceleration.y);
 
 }
+
+void Particles::orbitSphere(sf::Vector2f spherePosition, float radius)
+{
+
+    float distance_x = m_position.x - spherePosition.x - radius;
+    float distance_y = m_position.y - spherePosition.y - radius;
+
+    float distance = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
+
+    float distanceLimit = 50.f;
+
+    float intensity = 10 / pow(distance, 2);
+
+    sf::Vector2f acceleration = sf::Vector2f(-distance_x * intensity, -distance_y * intensity);
+
+    m_velocity = sf::Vector2f(m_velocity.x + acceleration.x, m_velocity.y + acceleration.y);
+
+    if (distance< distanceLimit)
+    {
+        m_velocity = sf::Vector2f(0, 0);
+    }
+
+}

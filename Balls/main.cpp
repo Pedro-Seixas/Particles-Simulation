@@ -5,7 +5,7 @@
 
 int main()
 {
-    int numberOfParticles = 200;
+    int numberOfParticles = 2000;
     sf::Color color(255, 255, 255);
 
     std::vector<Particles> particles;
@@ -15,7 +15,7 @@ int main()
 
 
     for (int i = 0; i < numberOfParticles; ++i) {
-        position = sf::Vector2f(position.x + 0.2, position.y);
+        position = sf::Vector2f(position.x + 0.2, position.y + 0.1);
         Particles particle(color, 1, position);
         particles.push_back(particle);
     }
@@ -38,6 +38,15 @@ int main()
             {
                 particles[i].orbitMouse(sf::Mouse::getPosition(window));
             }
+        }
+
+        if (menu.getSphereCreated() && !menu.getSphereStuckMouse())
+        {
+            for (int i = 0; i < numberOfParticles; i++)
+            {
+                particles[i].orbitSphere(menu.sphere->getPosition(), menu.sphere->getRadius());
+            }
+            
         }
 
         window.clear();

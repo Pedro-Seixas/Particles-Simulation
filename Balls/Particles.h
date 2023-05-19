@@ -19,6 +19,7 @@ public:
 	void updatePosition();
 	void applyGravity();
 	void orbitMouse(sf::Vector2i mousePosition);
+	void orbitSphere(sf::Vector2f spherePosition, float radius);
 
 private:
 	sf::CircleShape m_particle;

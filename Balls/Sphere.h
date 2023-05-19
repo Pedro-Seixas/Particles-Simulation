@@ -9,9 +9,13 @@ public:
 
 	float getMass() const { return m_mass; }
 	float getRadius() const { return m_radius; }
+	sf::Vector2f getPosition() const { return m_position; }
 
 	void draw(sf::RenderWindow& window);
 	void updatePosition(sf::RenderWindow& window);
+
+
+
 
 private:
 	sf::CircleShape m_sphere;
