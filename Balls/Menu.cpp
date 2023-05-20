@@ -23,10 +23,12 @@ void Menu::draw(sf::RenderWindow& window)
 	{
 		if (sphereStuckMouse)
 		{
-			sphere->updatePosition(window);
+			spheres[spheres.size()-1]->updatePosition(window);
 		}
-
-		sphere->draw(window);
+		for (int i = 0; i < spheres.size(); i++)
+		{
+			spheres[i]->draw(window);
+		}
 	}
 }
 
@@ -42,7 +44,9 @@ void Menu::checkIfSelected(sf::RenderWindow& window)
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && pressedOnce)
 		{
-			sphere = new Sphere(mousePosView, 50.f, 5000.f);
+			Sphere* sphere = new Sphere(mousePosView, 50.f);
+			std::cout << spheres.size() << std::endl;
+			spheres.push_back(sphere);
 			sphereStuckMouse = true;
 			pressedOnce = false;
 			sphereCreated = true;

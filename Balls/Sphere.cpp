@@ -1,7 +1,7 @@
 #include "Sphere.h"
 #include <iostream>
 
-Sphere::Sphere(sf::Vector2f position, float radius, float mass)
+Sphere::Sphere(sf::Vector2f position, float radius)
 {
 	m_position = position;
 	m_sphere.setPosition(position);
@@ -9,7 +9,6 @@ Sphere::Sphere(sf::Vector2f position, float radius, float mass)
 	m_radius = radius;
 	m_sphere.setRadius(radius);
 
-	m_mass = mass;
 
 	std::cout << "Sphere Created" << std::endl;
 }

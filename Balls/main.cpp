@@ -20,7 +20,7 @@ int main()
         particles.push_back(particle);
     }
 
-    sf::RenderWindow window(sf::VideoMode(1480, 720), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(1480, 720), "Particles");
     window.setFramerateLimit(60);
 
     while (window.isOpen())
@@ -44,7 +44,10 @@ int main()
         {
             for (int i = 0; i < numberOfParticles; i++)
             {
-                particles[i].orbitSphere(menu.sphere->getPosition(), menu.sphere->getRadius());
+                for (int j = 0; j < menu.getVectorSpheresSize(); j++)
+                {
+                    particles[i].orbitSphere(menu.spheres[j]->getPosition(), menu.spheres[j]->getRadius());
+                }
             }
             
         }

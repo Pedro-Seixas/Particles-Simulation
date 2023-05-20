@@ -17,7 +17,7 @@ void Particles::draw(sf::RenderWindow& window)
 {
     //windowLimits(window);
 
-    applyGravity();
+    applyForces();
 
     window.draw(m_particle);
 }
@@ -45,7 +45,7 @@ void Particles::updatePosition()
 }
 
 //TODO APPLY FORCES
-void Particles::applyGravity()
+void Particles::applyForces()
 {
     m_position = sf::Vector2f(m_position.x + m_velocity.x, m_position.y + m_velocity.y);
     updatePosition();

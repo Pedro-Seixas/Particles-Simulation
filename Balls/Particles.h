@@ -17,7 +17,7 @@ public:
 	void windowLimits(sf::RenderWindow& window);
 	void updateVelocity(sf::Vector2f velocity);
 	void updatePosition();
-	void applyGravity();
+	void applyForces();
 	void orbitMouse(sf::Vector2i mousePosition);
 	void orbitSphere(sf::Vector2f spherePosition, float radius);
 

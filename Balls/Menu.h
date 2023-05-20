@@ -2,6 +2,8 @@
 #define MENU_H
 #include "SFML/Graphics.hpp"
 #include "Sphere.h"
+#include <vector>
+#include <iostream>
 
 class Menu
 {
@@ -12,7 +14,9 @@ public:
     bool getSphereStuckMouse() const { return sphereStuckMouse; }
     void setSphereStuckMouse(bool status);
     bool getSphereCreated() const { return sphereCreated; }
-    Sphere* sphere;
+    //Sphere* sphere;
+    std::vector<Sphere*> spheres;
+    int getVectorSpheresSize() const { return spheres.size(); }
 
 private:
     struct Button
