@@ -16,20 +16,10 @@ Menu::Menu()
 
 void Menu::draw(sf::RenderWindow& window)
 {
+	updatePosition(window, 1);
 	checkIfSelected(window);
-	window.draw(buttons[0].buttonSprite);
 
-	if (sphereCreated)
-	{
-		if (sphereStuckMouse)
-		{
-			spheres[spheres.size()-1]->updatePosition(window);
-		}
-		for (int i = 0; i < spheres.size(); i++)
-		{
-			spheres[i]->draw(window);
-		}
-	}
+	window.draw(buttons[0].buttonSprite);
 }
 
 void Menu::checkIfSelected(sf::RenderWindow& window)
@@ -37,36 +27,71 @@ void Menu::checkIfSelected(sf::RenderWindow& window)
 	sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 	sf::Vector2f mousePosView = window.mapPixelToCoords(mousePos);
 
-    if (buttons[0].buttonSprite.getGlobalBounds().contains(mousePosView)) 
+
+	if (buttons[0].buttonSprite.getGlobalBounds().contains(mousePosView))
 	{
 
-        buttons[0].buttonSprite.setTexture(buttons[0].buttonSelected);
-
+		buttons[0].buttonSprite.setTexture(buttons[0].buttonSelected);
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && pressedOnce)
 		{
 			Sphere* sphere = new Sphere(mousePosView, 50.f);
-			std::cout << spheres.size() << std::endl;
 			spheres.push_back(sphere);
-			sphereStuckMouse = true;
+
+			std::cout << spheres.size() << std::endl;
+
+			spheres[spheres.size()-1]->setSphereStuckMouse(true);
 			pressedOnce = false;
 			sphereCreated = true;
 		}
 
-		
-    }
-    else
-    {
-        buttons[0].buttonSprite.setTexture(buttons[0].buttonNormal);
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+
+	}
+	else
+	{
+		buttons[0].buttonSprite.setTexture(buttons[0].buttonNormal);
+	}
+	
+
+	for (int i = 0; i < spheres.size(); i++)
+	{
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && spheres[i]->getMSphere().getGlobalBounds().contains(mousePosView))
 		{
-			sphereStuckMouse = false;
-			pressedOnce = true;
+			std::cout << "Clicked" << std::endl;
+
+			spheres[i]->setSphereStuckMouse(true);
+
+			break;
 		}
-    }
+		else if (sf::Event::MouseButtonReleased && spheres[i]->getMSphere().getGlobalBounds().contains(mousePosView))
+		{
+			std::cout << "Released" << std::endl;
+
+			spheres[i]->setSphereStuckMouse(false);
+
+			pressedOnce = true;
+
+			break;
+		}
+
+	}
 
 }
 
-void Menu::setSphereStuckMouse(bool status)
+
+void Menu::updatePosition(sf::RenderWindow& window, int id)
 {
-	sphereStuckMouse = status;
+	for (int i = 0; i < spheres.size(); i++)
+	{
+		if (sphereCreated)
+		{
+			if (spheres[i]->getSphereStuckMouse())
+			{
+				spheres[i]->updatePosition(window);
+			}
+			for (int i = 0; i < spheres.size(); i++)
+			{
+				spheres[i]->draw(window);
+			}
+		}
+	}
 }

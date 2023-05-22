@@ -12,11 +12,16 @@ public:
 
 	void draw(sf::RenderWindow& window);
 	void updatePosition(sf::RenderWindow& window);
+	void setSphereStuckMouse(bool status);
+	bool getSphereStuckMouse() const { return sphereStuckMouse; }
+
+	sf::CircleShape getMSphere() const { return m_sphere; }
 
 private:
 	sf::CircleShape m_sphere;
 	sf::Vector2f m_position;
 	float m_radius;
+	bool sphereStuckMouse = false;
 };
 
 

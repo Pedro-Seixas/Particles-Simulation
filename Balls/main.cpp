@@ -40,13 +40,16 @@ int main()
             }
         }
 
-        if (menu.getSphereCreated() && !menu.getSphereStuckMouse())
+        if (menu.getSphereCreated())
         {
             for (int i = 0; i < numberOfParticles; i++)
             {
-                for (int j = 0; j < menu.getVectorSpheresSize(); j++)
+                for (int j = 0; j < menu.getVectorSpheresSize()-1; j++)
                 {
-                    particles[i].orbitSphere(menu.spheres[j]->getPosition(), menu.spheres[j]->getRadius());
+                    if (!menu.spheres[j]->getSphereStuckMouse())
+                    {
+                        particles[i].orbitSphere(menu.spheres[j]->getPosition(), menu.spheres[j]->getRadius());
+                    }
                 }
             }
             

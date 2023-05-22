@@ -11,12 +11,10 @@ public:
     Menu();
     void draw(sf::RenderWindow& window);
     void checkIfSelected(sf::RenderWindow& window);
-    bool getSphereStuckMouse() const { return sphereStuckMouse; }
-    void setSphereStuckMouse(bool status);
     bool getSphereCreated() const { return sphereCreated; }
-    //Sphere* sphere;
     std::vector<Sphere*> spheres;
     int getVectorSpheresSize() const { return spheres.size(); }
+    void updatePosition(sf::RenderWindow& window, int id);
 
 private:
     struct Button
@@ -26,7 +24,6 @@ private:
         sf::Sprite buttonSprite;
     };
     std::unique_ptr<Button[]> buttons;
-    bool sphereStuckMouse = false;
     bool pressedOnce = true;
     bool sphereCreated = false;
 };

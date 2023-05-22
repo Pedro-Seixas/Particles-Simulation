@@ -27,3 +27,8 @@ void Sphere::updatePosition(sf::RenderWindow& window)
 	m_sphere.setPosition(m_position);
 
 }
+
+void Sphere::setSphereStuckMouse(bool status)
+{
+	sphereStuckMouse = status;
+}
