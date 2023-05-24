@@ -128,3 +128,8 @@ void Particles::resetForce(sf::RenderWindow& window)
     }
 
 }
+
+//TODO
+//Menu to Switch Different Modes
+//Show Number of Particles on Screen
+//Buttons to Toggle Explosion or Attraction of Particles
