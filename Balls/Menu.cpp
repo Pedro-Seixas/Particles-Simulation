@@ -37,8 +37,6 @@ void Menu::checkIfSelected(sf::RenderWindow& window)
 			Sphere* sphere = new Sphere(mousePosView, 50.f);
 			spheres.push_back(sphere);
 
-			std::cout << spheres.size() << std::endl;
-
 			spheres[spheres.size()-1]->setSphereStuckMouse(true);
 			pressedOnce = false;
 			sphereCreated = true;
@@ -56,16 +54,12 @@ void Menu::checkIfSelected(sf::RenderWindow& window)
 	{
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && spheres[i]->getMSphere().getGlobalBounds().contains(mousePosView))
 		{
-			std::cout << "Clicked" << std::endl;
-
 			spheres[i]->setSphereStuckMouse(true);
 
 			break;
 		}
 		else if (sf::Event::MouseButtonReleased && spheres[i]->getMSphere().getGlobalBounds().contains(mousePosView))
 		{
-			std::cout << "Released" << std::endl;
-
 			spheres[i]->setSphereStuckMouse(false);
 
 			pressedOnce = true;

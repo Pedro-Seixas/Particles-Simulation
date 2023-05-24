@@ -8,7 +8,7 @@ Particles::Particles(sf::Color color, float radius, sf::Vector2f position) : m_g
 
     m_position = position;
     m_particle.setPosition(position);
-
+    m_startPosition = m_position;
     updateVelocity(sf::Vector2f(0, m_gravity));
 }
 
@@ -16,7 +16,7 @@ Particles::Particles(sf::Color color, float radius, sf::Vector2f position) : m_g
 void Particles::draw(sf::RenderWindow& window)
 {
     //windowLimits(window);
-
+    resetForce(window);
     applyForces();
 
     window.draw(m_particle);
@@ -44,7 +44,6 @@ void Particles::updatePosition()
     m_particle.setPosition(m_position);
 }
 
-//TODO APPLY FORCES
 void Particles::applyForces()
 {
     m_position = sf::Vector2f(m_position.x + m_velocity.x, m_position.y + m_velocity.y);
@@ -60,16 +59,16 @@ void Particles::orbitMouse(sf::Vector2i mousePosition)
 
     float distance = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
 
-    float distanceLimit = 50;
+    float distanceLimit = 5;
 
-    float intensity = 10 / pow(distance, 2);
+    float intensity = 1000 / pow(distance, 2);
 
     if (distance < distanceLimit)
     {
         intensity = 0;
     }
 
-    sf::Vector2f acceleration = sf::Vector2f(-distance_x * intensity, -distance_y * intensity);
+    sf::Vector2f acceleration = sf::Vector2f(distance_x * intensity, distance_y * intensity);
 
     m_velocity = sf::Vector2f(m_velocity.x + acceleration.x, m_velocity.y + acceleration.y);
 
@@ -83,7 +82,7 @@ void Particles::orbitSphere(sf::Vector2f spherePosition, float radius)
 
     float distance = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
 
-    float distanceLimit = 50.f;
+    float distanceLimit = 50;
 
     float intensity = 10 / pow(distance, 2);
 
@@ -94,6 +93,38 @@ void Particles::orbitSphere(sf::Vector2f spherePosition, float radius)
     if (distance< distanceLimit)
     {
         m_velocity = sf::Vector2f(0, 0);
+    }
+
+}
+
+//Function Responsible For Making the Particles Return To Initial Position
+void Particles::resetForce(sf::RenderWindow& window)
+{
+    float distance_x = m_startPosition.x - m_position.x;
+    float distance_y = m_startPosition.y - m_position.y;
+
+    float distance = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
+
+    float intensity = 0.05;
+
+    float limitDistance = 1000;
+
+    //Higher Distance, Higher Acceleration
+    sf::Vector2f acceleration = sf::Vector2f(distance_x * intensity, distance_y * intensity);
+
+    if (distance < 1 && std::abs(m_velocity.x) < 0.1 && std::abs(m_velocity.y) < 0.1)
+    {
+        m_velocity = sf::Vector2f(0, 0);
+    }
+    else
+    {
+        m_velocity += acceleration;
+    }
+
+    //This makes sure the particles do not resonate and stop moving after finding its spot.
+    if (distance < limitDistance)
+    {
+        m_velocity = m_velocity / (float)1.5;
     }
 
 }

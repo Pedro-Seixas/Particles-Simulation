@@ -9,8 +9,6 @@ Sphere::Sphere(sf::Vector2f position, float radius)
 	m_radius = radius;
 	m_sphere.setRadius(radius);
 
-
-	std::cout << "Sphere Created" << std::endl;
 }
 
 void Sphere::draw(sf::RenderWindow& window)

@@ -20,6 +20,7 @@ public:
 	void applyForces();
 	void orbitMouse(sf::Vector2i mousePosition);
 	void orbitSphere(sf::Vector2f spherePosition, float radius);
+	void resetForce(sf::RenderWindow& window);
 
 	sf::CircleShape getMParticle() const { return m_particle; }
 
@@ -27,6 +28,7 @@ private:
 	sf::CircleShape m_particle;
 	sf::Vector2f m_velocity;
 	sf::Vector2f m_position;
+	sf::Vector2f m_startPosition;
 	float m_gravity;
 
 };

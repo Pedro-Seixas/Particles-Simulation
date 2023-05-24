@@ -9,7 +9,7 @@ int main()
 {
     windowState currentState = imageToParticle;
     int numberOfParticles = 2000;
-    int numberOfPixels = 150 * 150;
+    int numberOfPixels = 100 * 100;
 
     sf::Color color(255, 255, 255);
     std::vector<Particles> particles;
@@ -18,7 +18,7 @@ int main()
     //Image Processing
     sf::Image img;
 
-    if (!img.loadFromFile("imgUploaded/img2.jpg"))
+    if (!img.loadFromFile("imgUploaded/shrek.jpg"))
     {
         std::cout << "Failed to Load Image" << std::endl;
     }
@@ -30,8 +30,8 @@ int main()
     sf::Image originalImage = texture.copyToImage();
     sf::Vector2u originalSize = originalImage.getSize();
 
-    int imageHeight = 150;
-    int imageWidth = 150;
+    int imageHeight = 100;
+    int imageWidth = 100;
 
     sf::Image resizedImage;
     resizedImage.create(imageHeight, imageWidth);
