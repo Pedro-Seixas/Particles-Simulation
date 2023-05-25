@@ -43,6 +43,17 @@ Menu::Menu()
 	buttons[2].buttonSprite.setPosition(sf::Vector2f(220.f, 20.f));
 	buttons[2].buttonSprite.setScale(0.5, 0.5);
 
+	//Text
+	if (!font.loadFromFile("fonts/OpenSans-SemiBold.ttf"))
+	{
+		std::cout << "Failed to load Font" << std::endl;
+	}
+
+	m_text.setString("0 Particles");
+	m_text.setFont(font);
+	m_text.setCharacterSize(32);
+	m_text.setFillColor(sf::Color::White);
+	m_text.setPosition(sf::Vector2f(600.f, 20.f));
 }
 
 void Menu::draw(sf::RenderWindow& window, sf::Event& event)
@@ -55,6 +66,8 @@ void Menu::draw(sf::RenderWindow& window, sf::Event& event)
 
 		window.draw(buttons[i].buttonSprite);
 	}
+
+	window.draw(m_text);
 }
 
 void Menu::checkIfSelected(sf::RenderWindow& window, sf::Event& event)
@@ -199,4 +212,9 @@ void Menu::changeButtonImage(int buttonId)
 			resetStatus = true;
 		}
 	}
+}
+
+void Menu::changeNumberOfParticles(std::string text)
+{
+	m_text.setString(text);
 }

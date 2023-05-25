@@ -58,9 +58,9 @@ void Particles::orbitMouse(sf::Vector2i mousePosition)
 
     float distance = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
 
-    float distanceLimit = 5;
+    float distanceLimit = 50;
 
-    float intensity = 100 / pow(distance, 2);
+    float intensity = 10 / pow(distance, 2);
 
     if (distance < distanceLimit)
     {
