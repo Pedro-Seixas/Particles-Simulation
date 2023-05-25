@@ -14,7 +14,7 @@ int main()
     sf::Color color(255, 255, 255);
     std::vector<Particles> particles;
     sf::Vector2f position = sf::Vector2f(300.f, 300.f);
-    sf::Vector2f position2 = sf::Vector2f(0, 0);
+    sf::Vector2f position2 = sf::Vector2f(500, 200);
     //Image Processing
     sf::Image img;
 
@@ -54,7 +54,7 @@ int main()
             particles.push_back(particle);
         }
         position2.y = position2.y + 3;
-        position2.x = 0;
+        position2.x = 500;
     }
 
     //END IMAGE PROCESSING

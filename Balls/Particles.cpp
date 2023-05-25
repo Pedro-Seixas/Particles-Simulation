@@ -61,7 +61,7 @@ void Particles::orbitMouse(sf::Vector2i mousePosition)
 
     float distanceLimit = 5;
 
-    float intensity = 1000 / pow(distance, 2);
+    float intensity = 100 / pow(distance, 2);
 
     if (distance < distanceLimit)
     {
@@ -107,7 +107,7 @@ void Particles::resetForce(sf::RenderWindow& window)
 
     float intensity = 0.05;
 
-    float limitDistance = 1000;
+    float limitDistance = 500;
 
     //Higher Distance, Higher Acceleration
     sf::Vector2f acceleration = sf::Vector2f(distance_x * intensity, distance_y * intensity);
