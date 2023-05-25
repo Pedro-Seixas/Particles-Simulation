@@ -16,7 +16,6 @@ Particles::Particles(sf::Color color, float radius, sf::Vector2f position) : m_g
 void Particles::draw(sf::RenderWindow& window)
 {
     //windowLimits(window);
-    resetForce(window);
     applyForces();
 
     window.draw(m_particle);
@@ -68,7 +67,7 @@ void Particles::orbitMouse(sf::Vector2i mousePosition)
         intensity = 0;
     }
 
-    sf::Vector2f acceleration = sf::Vector2f(distance_x * intensity, distance_y * intensity);
+    sf::Vector2f acceleration = sf::Vector2f(-distance_x * intensity, -distance_y * intensity);
 
     m_velocity = sf::Vector2f(m_velocity.x + acceleration.x, m_velocity.y + acceleration.y);
 
@@ -129,6 +128,27 @@ void Particles::resetForce(sf::RenderWindow& window)
 
 }
 
+void Particles::escapeMouse(sf::Vector2i mousePosition)
+{
+    float distance_x = m_position.x - mousePosition.x;
+    float distance_y = m_position.y - mousePosition.y;
+
+    float distance = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
+
+    float distanceLimit = 5;
+
+    float intensity = 100 / pow(distance, 2);
+
+    if (distance < distanceLimit)
+    {
+        intensity = 0;
+    }
+
+    sf::Vector2f acceleration = sf::Vector2f(distance_x * intensity, distance_y * intensity);
+
+    m_velocity = sf::Vector2f(m_velocity.x + acceleration.x, m_velocity.y + acceleration.y);
+
+}
 //TODO
 //Menu to Switch Different Modes
 //Show Number of Particles on Screen

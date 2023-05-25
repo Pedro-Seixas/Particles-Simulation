@@ -9,12 +9,15 @@ class Menu
 {
 public:
     Menu();
-    void draw(sf::RenderWindow& window);
-    void checkIfSelected(sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window, sf::Event& event);
+    void checkIfSelected(sf::RenderWindow& window, sf::Event& event);
     bool getSphereCreated() const { return sphereCreated; }
     std::vector<Sphere*> spheres;
     int getVectorSpheresSize() const { return spheres.size(); }
     void updatePosition(sf::RenderWindow& window, int id);
+    void changeButtonImage(int buttonId);
+    bool getResetStatus() const { return resetStatus; }
+    bool getMouseStatus() const { return mouseStatus; }
 
 private:
     struct Button
@@ -22,10 +25,16 @@ private:
         sf::Texture buttonNormal;
         sf::Texture buttonSelected;
         sf::Sprite buttonSprite;
+        sf::Texture buttonTypeTwoNormal;
+        sf::Texture buttonTypeTwoSelected;
+        int type = 1;
     };
     std::unique_ptr<Button[]> buttons;
     bool pressedOnce = true;
     bool sphereCreated = false;
+    bool pressedButtonOnce = false;
+    bool resetStatus = true;
+    bool mouseStatus = true;
 };
 
 

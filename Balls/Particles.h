@@ -19,6 +19,7 @@ public:
 	void updatePosition();
 	void applyForces();
 	void orbitMouse(sf::Vector2i mousePosition);
+	void escapeMouse(sf::Vector2i mousePosition);
 	void orbitSphere(sf::Vector2f spherePosition, float radius);
 	void resetForce(sf::RenderWindow& window);
 

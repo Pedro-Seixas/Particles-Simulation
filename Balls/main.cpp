@@ -7,7 +7,7 @@ enum windowState { spheres, imageToParticle };
 
 int main()
 {
-    windowState currentState = imageToParticle;
+    windowState currentState = spheres;
     int numberOfParticles = 2000;
     int numberOfPixels = 100 * 100;
 
@@ -44,26 +44,26 @@ int main()
         }
     }
 
-    for (int x = 0; x < imageHeight; x++)
-    {
-        for (int y = 0; y < imageWidth; y++)
-        {
-            color = resizedImage.getPixel(y, x);
-            position2 = sf::Vector2f(position2.x + 3, position2.y);
-            Particles particle(color, 2, position2);
-            particles.push_back(particle);
-        }
-        position2.y = position2.y + 3;
-        position2.x = 500;
-    }
+    //for (int x = 0; x < imageHeight; x++)
+    //{
+    //    for (int y = 0; y < imageWidth; y++)
+    //    {
+    //        color = resizedImage.getPixel(y, x);
+    //        position2 = sf::Vector2f(position2.x + 3, position2.y);
+    //        Particles particle(color, 2, position2);
+    //        particles.push_back(particle);
+    //    }
+    //    position2.y = position2.y + 3;
+    //    position2.x = 500;
+    //}
 
     //END IMAGE PROCESSING
     //Create all particles
-    //for (int i = 0; i < numberOfParticles; ++i) {
-    //    position = sf::Vector2f(position.x + 0.2, position.y + 0.1);
-    //    Particles particle(color, 1, position);
-    //    particles.push_back(particle);
-    //}
+    for (int i = 0; i < numberOfParticles; ++i) {
+        position = sf::Vector2f(position.x + 0.2, position.y + 0.1);
+        Particles particle(color, 1, position);
+        particles.push_back(particle);
+    }
 
     Menu menu;
 
@@ -84,14 +84,29 @@ int main()
 
             window.clear();
 
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+            //Toggle between escape/orbit mouse
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && menu.getMouseStatus())
+            {
+                for (int i = 0; i < numberOfParticles; i++)
+                {
+                    particles[i].escapeMouse(sf::Mouse::getPosition(window));
+                }
+            }
+            else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && !menu.getMouseStatus())
             {
                 for (int i = 0; i < numberOfParticles; i++)
                 {
                     particles[i].orbitMouse(sf::Mouse::getPosition(window));
                 }
             }
-
+            //Toggle between Reset ON or Reset OFF
+            if (menu.getResetStatus())
+            {
+                for (int i = 0; i < numberOfParticles; i++)
+                {
+                    particles[i].resetForce(window);
+                }
+            }
             //Check if there are spheres created before calling them
             if (menu.getSphereCreated())
             {
@@ -114,7 +129,7 @@ int main()
                 particles[i].draw(window);
             }
 
-            menu.draw(window);
+            menu.draw(window, event);
             window.display();
 
             break;
