@@ -2,19 +2,29 @@
 #include "Particles.h"
 #include "Sphere.h"
 #include "Menu.h"
+#include <SFML/OpenGL.hpp>
+
 
 enum windowState { spheres, imageToParticle };
 
 int main()
 {
+    //sf::Shader shader;
+    //if (!shader.loadFromFile("vertexShader.vert", "fragmentShader.frag"))
+    //{
+    //    std::cout << "Failed to Load Shaders" << std::endl;
+    //}
+
+
     windowState currentState = imageToParticle;
     int numberOfParticles = 2000;
-    int numberOfPixels = 100 * 100;
+    int numberOfPixels = 400 * 400;
 
     sf::Color color(255, 255, 255);
     std::vector<Particles> particles;
     sf::Vector2f position = sf::Vector2f(300.f, 300.f);
     sf::Vector2f position2 = sf::Vector2f(500, 200);
+
     //Image Processing
     sf::Image img;
 
@@ -30,8 +40,8 @@ int main()
     sf::Image originalImage = texture.copyToImage();
     sf::Vector2u originalSize = originalImage.getSize();
 
-    int imageHeight = 100;
-    int imageWidth = 100;
+    int imageHeight = 400;
+    int imageWidth = 400;
 
     sf::Image resizedImage;
     resizedImage.create(imageHeight, imageWidth);
@@ -50,7 +60,7 @@ int main()
         {
             color = resizedImage.getPixel(y, x);
             position2 = sf::Vector2f(position2.x + 3, position2.y);
-            Particles particle(color, 2, position2);
+            Particles particle(color, 1, position2);
             particles.push_back(particle);
         }
         position2.y = position2.y + 3;
@@ -72,6 +82,8 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(1480, 720), "Particles");
     window.setFramerateLimit(60);
+
+    //shader.setUniform("resolution", sf::Vector2f(window.getSize()));
 
     while (window.isOpen())
     {
@@ -129,7 +141,7 @@ int main()
             //Draw Particles
             for (int i = 0; i < numberOfParticles; i++)
             {
-                particles[i].draw(window);
+                //particles[i].draw(window);
             }
 
             menu.draw(window, event);
@@ -166,7 +178,7 @@ int main()
             }
 
             for (int i = 0; i < numberOfPixels; ++i) {
-                particles[i].draw(window);
+                particles[i].draw(window/*, shader*/);
             }
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right))

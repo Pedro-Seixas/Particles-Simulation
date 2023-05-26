@@ -9,7 +9,7 @@ class Particles
 {
 public:
 	Particles(sf::Color color, float radius, sf::Vector2f position);
-	void draw(sf::RenderWindow& window);
+	void draw(sf::RenderWindow& window/*, sf::Shader& shader*/);
 
 	sf::Vector2f getPosition() const { return m_position; }
 	sf::Vector2f getVelocity() const { return m_velocity; }

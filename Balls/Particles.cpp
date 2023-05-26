@@ -13,12 +13,12 @@ Particles::Particles(sf::Color color, float radius, sf::Vector2f position) : m_g
 }
 
 
-void Particles::draw(sf::RenderWindow& window)
+void Particles::draw(sf::RenderWindow& window/*, sf::Shader& shader*/)
 {
     //windowLimits(window);
     applyForces();
 
-    window.draw(m_particle);
+    window.draw(m_particle/*, &shader*/);
 }
 
 void Particles::windowLimits(sf::RenderWindow& window)
@@ -56,11 +56,11 @@ void Particles::orbitMouse(sf::Vector2i mousePosition)
     float distance_x = m_position.x - mousePosition.x;
     float distance_y = m_position.y - mousePosition.y;
 
-    float distance = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
+    float distance = pow(distance_x, 2) + pow(distance_y, 2);
 
     float distanceLimit = 50;
 
-    float intensity = 10 / pow(distance, 2);
+    float intensity = 10 / distance;
 
     if (distance < distanceLimit)
     {
@@ -79,11 +79,11 @@ void Particles::orbitSphere(sf::Vector2f spherePosition, float radius)
     float distance_x = m_position.x - spherePosition.x - radius;
     float distance_y = m_position.y - spherePosition.y - radius;
 
-    float distance = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
+    float distance =pow(distance_x, 2) + pow(distance_y, 2);
 
     float distanceLimit = 50;
 
-    float intensity = 10 / pow(distance, 2);
+    float intensity = 10 / distance;
 
     sf::Vector2f acceleration = sf::Vector2f(-distance_x * intensity, -distance_y * intensity);
 
@@ -133,12 +133,14 @@ void Particles::escapeMouse(sf::Vector2i mousePosition)
     float distance_x = m_position.x - mousePosition.x;
     float distance_y = m_position.y - mousePosition.y;
 
-    float distance = sqrt(pow(distance_x, 2) + pow(distance_y, 2));
+    float distance = pow(distance_x, 2) + pow(distance_y, 2);
 
-    float distanceLimit = 5;
+    float distanceLimit = 1;
 
-    float intensity = 100 / pow(distance, 2);
+    float intensity = 100 / distance;
 
+    //This is necessary so particles do not go very far away very quickly (inverse square law)
+    //Intensity tend to infinite when the distance tend to 0.
     if (distance < distanceLimit)
     {
         intensity = 0;
@@ -149,7 +151,3 @@ void Particles::escapeMouse(sf::Vector2i mousePosition)
     m_velocity = sf::Vector2f(m_velocity.x + acceleration.x, m_velocity.y + acceleration.y);
 
 }
-//TODO
-//Menu to Switch Different Modes
-//Show Number of Particles on Screen
-//Buttons to Toggle Explosion or Attraction of Particles
