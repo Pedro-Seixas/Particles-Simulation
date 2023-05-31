@@ -181,14 +181,6 @@ int main()
                 particles[i].draw(window/*, shader*/);
             }
 
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
-            {
-                for (int i = 0; i < numberOfPixels; i++)
-                {
-                    particles[i].orbitMouse(sf::Mouse::getPosition(window));
-                }
-            }
-
             menu.draw(window, event);
             window.display();
         }
