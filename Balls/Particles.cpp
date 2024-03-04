@@ -111,7 +111,7 @@ void Particles::resetForce(sf::RenderWindow& window)
     //Higher Distance, Higher Acceleration
     sf::Vector2f acceleration = sf::Vector2f(distance_x * intensity, distance_y * intensity);
 
-    if (distance < 1 && std::abs(m_velocity.x) < 0.1 && std::abs(m_velocity.y) < 0.1)
+    if (distance < 0.2 && std::abs(m_velocity.x) < 0.1 && std::abs(m_velocity.y) < 0.1)
     {
         m_velocity = sf::Vector2f(0, 0);
     }

@@ -9,16 +9,8 @@ enum windowState { spheres, imageToParticle };
 
 int main()
 {
-    //sf::Shader shader;
-    //if (!shader.loadFromFile("vertexShader.vert", "fragmentShader.frag"))
-    //{
-    //    std::cout << "Failed to Load Shaders" << std::endl;
-    //}
-
-
     windowState currentState = imageToParticle;
-    int numberOfParticles = 2000;
-    int numberOfPixels = 400 * 400;
+    int numberOfParticles = 40 * 40;
 
     sf::Color color(255, 255, 255);
     std::vector<Particles> particles;
@@ -33,15 +25,15 @@ int main()
         std::cout << "Failed to Load Image" << std::endl;
     }
 
-    //Resize Image So the Computer doesnt Go Boom When Creating Particles
+    //Resize image so the computer doesnt go boom when creating particles
     sf::Texture texture;
     texture.loadFromImage(img);
 
     sf::Image originalImage = texture.copyToImage();
     sf::Vector2u originalSize = originalImage.getSize();
 
-    int imageHeight = 400;
-    int imageWidth = 400;
+    int imageHeight = sqrt(numberOfParticles);
+    int imageWidth = sqrt(numberOfParticles);
 
     sf::Image resizedImage;
     resizedImage.create(imageHeight, imageWidth);
@@ -51,6 +43,7 @@ int main()
         for (unsigned int y = 0; y < imageHeight; y++) {
             sf::Color color = originalImage.getPixel(x * scaleFactors.x, y * scaleFactors.y);
             resizedImage.setPixel(x, y, color);
+
         }
     }
 
@@ -59,25 +52,32 @@ int main()
         for (int y = 0; y < imageWidth; y++)
         {
             color = resizedImage.getPixel(y, x);
-            position2 = sf::Vector2f(position2.x + 3, position2.y);
+            position2 = sf::Vector2f(position2.x + 2, position2.y);
             Particles particle(color, 1, position2);
             particles.push_back(particle);
         }
-        position2.y = position2.y + 3;
+        position2.y = position2.y + 2;
         position2.x = 500;
     }
 
     //END IMAGE PROCESSING
     //Create all particles
+    //int count = 0;
     //for (int i = 0; i < numberOfParticles; ++i) {
-    //    position = sf::Vector2f(position.x + 0.2, position.y + 0.1);
-    //    Particles particle(color, 1, position);
+    //    sf::Color color(count, 255, 255);
+    //    position = sf::Vector2f(position.x + 0.1, position.y);
+    //    Particles particle(color, 2, position);
     //    particles.push_back(particle);
+
+    //    if (count == 253) {
+    //        count = 0;
+    //    }
+    //    count++;
     //}
 
     Menu menu;
 
-    std::string particleText = std::to_string(numberOfPixels) + " Particles";
+    std::string particleText = std::to_string(numberOfParticles) + " Particles";
     menu.changeNumberOfParticles(particleText);
 
     sf::RenderWindow window(sf::VideoMode(1480, 720), "Particles");
@@ -141,7 +141,7 @@ int main()
             //Draw Particles
             for (int i = 0; i < numberOfParticles; i++)
             {
-                //particles[i].draw(window);
+                particles[i].draw(window);
             }
 
             menu.draw(window, event);
@@ -156,14 +156,14 @@ int main()
             //Toggle between escape/orbit mouse
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && menu.getMouseStatus())
             {
-                for (int i = 0; i < numberOfPixels; i++)
+                for (int i = 0; i < numberOfParticles; i++)
                 {
                     particles[i].escapeMouse(sf::Mouse::getPosition(window));
                 }
             }
             else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && !menu.getMouseStatus())
             {
-                for (int i = 0; i < numberOfPixels; i++)
+                for (int i = 0; i < numberOfParticles; i++)
                 {
                     particles[i].orbitMouse(sf::Mouse::getPosition(window));
                 }
@@ -171,13 +171,13 @@ int main()
             //Toggle between Reset ON or Reset OFF
             if (menu.getResetStatus())
             {
-                for (int i = 0; i < numberOfPixels; i++)
+                for (int i = 0; i < numberOfParticles; i++)
                 {
                     particles[i].resetForce(window);
                 }
             }
 
-            for (int i = 0; i < numberOfPixels; ++i) {
+            for (int i = 0; i < numberOfParticles; ++i) {
                 particles[i].draw(window/*, shader*/);
             }
 
