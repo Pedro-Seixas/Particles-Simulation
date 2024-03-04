@@ -83,8 +83,6 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1480, 720), "Particles");
     window.setFramerateLimit(60);
 
-    //shader.setUniform("resolution", sf::Vector2f(window.getSize()));
-
     while (window.isOpen())
     {
         sf::Event event;
